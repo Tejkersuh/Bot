@@ -19,7 +19,11 @@ matches = [
 }
 
 ]
-def lose_streak(streak):
+
+choose = input("Podaj co chcesz zrobić (KDA/STREAK)")
+choose = choose.upper()
+
+def lose_streak(streak): #funkcja obliczajaca loss streak
     count_losses = 0
     for game in streak:
         if game["result"] == "Loss":
@@ -28,9 +32,35 @@ def lose_streak(streak):
             count_losses = 0
     return count_losses
 
-streak = lose_streak(matches)
+def stats(kda): #funkcja obliczajaca kda
+    k = 0
+    d = 0
+    a = 0
+    for game in kda:
+        k += game["stats"]["kills"]
+        d += game["stats"]["deaths"]
+        a += game["stats"]["assists"]
+    killratio = (k + a) / d
+    return killratio
 
-if(streak > 2):
-    print("Zaczął się lossstreak, trzymaj gardę wysoko")
-else:
-    print("Nie ma lossstreaka, pozdro")
+action =  {
+    "KDA": stats,
+    "STREAK": lose_streak
+} 
+
+if choose in action: #if sprawdzjacy wybor
+    actionchoose = action[choose]
+    result = actionchoose(matches)
+
+if choose == "KDA": #if sprawdzajcy czy wybor to KDA
+    ratio = result
+    print("Twoje KDA to", ratio)
+
+if choose == "STREAK": #if sprawdzjacy czy wybor to STREAK
+    streak = result
+
+    if(streak > 2):
+        print("Zaczął się lossstreak, trzymaj gardę wysoko")
+    else:
+        print("Nie ma losestreaka, pozdro")
+    
