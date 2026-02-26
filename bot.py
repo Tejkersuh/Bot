@@ -20,7 +20,7 @@ matches = [
 
 ]
 
-choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT)")
+choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS)")
 choose = choose.upper()
 
 def lose_streak(streak): #funkcja obliczajaca loss streak
@@ -47,10 +47,18 @@ def count(ammount): #funkcja liczaca ilosc gier
    game_ammount = len(ammount)
    return game_ammount
 
+def get_champs(data):
+    diffrent_champs = []
+    for game in data:
+        diffrent_champs.append(game["champion_name"])
+    unique_champs = set(diffrent_champs)
+    return ", ".join(unique_champs)
+
 action =  {
     "KDA": stats,
     "STREAK": lose_streak,
-    "COUNT": count
+    "COUNT": count,
+    "CHAMPIONS": get_champs
 } 
 
 if choose in action: #if sprawdzjacy wybor
@@ -72,3 +80,7 @@ if choose == "STREAK": #if sprawdzjacy czy wybor to STREAK
 if choose == "COUNT": #if sprawdzajacy czy wybor to COUNT
     total_games = result
     print("Zagrałeś", total_games, "gier")
+
+if choose == "CHAMPIONS":
+    champion = result
+    print("Grasz postaciami:", result)
