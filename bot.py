@@ -36,14 +36,20 @@ def get_champs(data): #funckja sprawdzajaca rozne postacie
     unique_champs = set(diffrent_champs)
     return ", ".join(unique_champs)
 
+def total_dmg(dmg):
+    added_dmg = 0
+    for game in dmg:
+       added_dmg += game["stats"]["damage_delt"]
+    return added_dmg
 action =  {
     "KDA": stats,
     "STREAK": lose_streak,
     "COUNT": count,
-    "CHAMPIONS": get_champs
+    "CHAMPIONS": get_champs,
+    "DMG": total_dmg
 } 
-while True:
-    choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS)")
+while True: #petla wyboru opcji
+    choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS/DMG)")
     choose = choose.upper()
     if choose in action: #if sprawdzjacy wybor
         actionchoose = action[choose]
@@ -71,3 +77,7 @@ if choose == "COUNT": #if sprawdzajacy czy wybor to COUNT
 if choose == "CHAMPIONS": #if sprawdzajacy czy wybor to CHAMPIONS
     champion = result
     print("Grasz postaciami:", result)
+
+if choose == "DMG":
+    full_dmg = result
+    print("Łacznie zadałeś:", full_dmg)
