@@ -36,20 +36,41 @@ def get_champs(data): #funckja sprawdzajaca rozne postacie
     unique_champs = set(diffrent_champs)
     return ", ".join(unique_champs)
 
-def total_dmg(dmg):
+def total_dmg(dmg): #funckja obliczajaca calkowity damage 
     added_dmg = 0
     for game in dmg:
        added_dmg += game["stats"]["damage_delt"]
     return added_dmg
-action =  {
+
+def average_dmg(dmg): #funkcja obliczajaca sredni damage
+    if not dmg:
+        return 0
+    return total_dmg(dmg) / count(dmg)
+
+def most_played(played): #funkcja wyswietaljaca postac ktora zagrano najwiecej
+    counts = {}
+    for game in played:
+        name = game["champion_name"]
+        if name in counts:
+            counts[name] += 1
+        else:
+            counts[name] = 1
+    if not counts:
+        return("Brak gier")
+    else:
+        return max(counts, key = counts.get)
+
+action =  { #mozliwe akcje
     "KDA": stats,
     "STREAK": lose_streak,
     "COUNT": count,
     "CHAMPIONS": get_champs,
-    "DMG": total_dmg
+    "TOTALDMG": total_dmg,
+    "AVERAGEDMG": average_dmg,
+    "MOSTPLAYED": most_played
 } 
 while True: #petla wyboru opcji
-    choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS/DMG)")
+    choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS/TOTALDMG/AVERAGEDMG/MOSTPLAYED)")
     choose = choose.upper()
     if choose in action: #if sprawdzjacy wybor
         actionchoose = action[choose]
@@ -78,6 +99,14 @@ if choose == "CHAMPIONS": #if sprawdzajacy czy wybor to CHAMPIONS
     champion = result
     print("Grasz postaciami:", result)
 
-if choose == "DMG":
+if choose == "TOTALDMG": #if spradzjacy czy wybor to TOTALDMG
     full_dmg = result
     print("Łacznie zadałeś:", full_dmg)
+
+if choose == "AVERAGEDMG": #if spradzjacy czy wybor to AVERAGEDMG
+    average_damage = result
+    print("Średnia Twoich obrażeń to:", int(result))
+
+if choose == "MOSTPLAYED": #if spradzjacy czy wybor to MOSTPLAYED
+    added_played = result
+    print("Najwięcej zagrałes:", result)
