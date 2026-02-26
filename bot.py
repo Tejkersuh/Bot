@@ -20,7 +20,7 @@ matches = [
 
 ]
 
-choose = input("Podaj co chcesz zrobić (KDA/STREAK)")
+choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT)")
 choose = choose.upper()
 
 def lose_streak(streak): #funkcja obliczajaca loss streak
@@ -43,9 +43,14 @@ def stats(kda): #funkcja obliczajaca kda
     killratio = (k + a) / d
     return killratio
 
+def count(ammount): #funkcja liczaca ilosc gier
+   game_ammount = len(ammount)
+   return game_ammount
+
 action =  {
     "KDA": stats,
-    "STREAK": lose_streak
+    "STREAK": lose_streak,
+    "COUNT": count
 } 
 
 if choose in action: #if sprawdzjacy wybor
@@ -64,3 +69,6 @@ if choose == "STREAK": #if sprawdzjacy czy wybor to STREAK
     else:
         print("Nie ma losestreaka, pozdro")
     
+if choose == "COUNT": #if sprawdzajacy czy wybor to COUNT
+    total_games = result
+    print("Zagrałeś", total_games, "gier")
