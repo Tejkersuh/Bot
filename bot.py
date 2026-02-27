@@ -12,7 +12,10 @@ def lose_streak(streak): #funkcja obliczajaca loss streak
             count_losses += 1
         else:
             count_losses = 0
-    return count_losses
+    if(count_losses > 2):
+         print("Zaczął się lossstreak, trzymaj gardę wysoko")
+    else:
+        print("Nie ma losestreaka, pozdro")
 
 def stats(kda): #funkcja obliczajaca kda
     k = 0
@@ -23,20 +26,20 @@ def stats(kda): #funkcja obliczajaca kda
         d += game["stats"]["deaths"]
         a += game["stats"]["assists"]
     if d == 0:
-        return k + a
+        print("Twoje KDA to:", k+a)
     else:
-        return(k + a) / d
+        print("Twoje KDA to:", (k+a)/d)
 
 def count(ammount): #funkcja liczaca ilosc gier
    game_ammount = len(ammount)
-   return game_ammount
+   return len(ammount)
 
 def get_champs(data): #funckja sprawdzajaca rozne postacie
     diffrent_champs = []
     for game in data:
         diffrent_champs.append(game["champion_name"])
     unique_champs = set(diffrent_champs)
-    return ", ".join(unique_champs)
+    print("Grasz postaciami:", ", " .join(unique_champs))
 
 def total_dmg(dmg): #funckja obliczajaca calkowity damage 
     added_dmg = 0
@@ -47,7 +50,7 @@ def total_dmg(dmg): #funckja obliczajaca calkowity damage
 def average_dmg(dmg): #funkcja obliczajaca sredni damage
     if not dmg:
         return 0
-    return total_dmg(dmg) / count(dmg)
+    print("Średnia twoich obrażeń to:", (round(total_dmg(dmg) / count(dmg))))
 
 def most_played(played): #funkcja wyswietaljaca postac ktora zagrano najwiecej
     counts = {}
@@ -58,16 +61,16 @@ def most_played(played): #funkcja wyswietaljaca postac ktora zagrano najwiecej
         else:
             counts[name] = 1
     if not counts:
-        return("Brak gier")
+        print("Brak gier")
     else:
-        return max(counts, key = counts.get)
+        print("Najwięcej zagrałeś:", max(counts, key = counts.get))
 
 def player_ranking(ranking): #funkcja wyswietalaca 5 najlepszych osob z rankingu
     for player in ranking[0:5]:
         name = player["nickname"]
         wr = player["winratio"]
         place = player["place"]
-        print("Nr.", place, name , "ma", wr, "% winratio")
+        print("Nr.", place, "ma", wr ,"% winratio")
 
 
 
@@ -104,34 +107,11 @@ while True: #petla wyboru opcji
     else:
         print("Nie ma takiej opcji")
 
-if choose == "KDA": #if sprawdzajcy czy wybor to KDA
-    ratio = result
-    print("Twoje KDA to", round(ratio, 2))
 
-if choose == "STREAK": #if sprawdzjacy czy wybor to STREAK
-    streak = result
+if choose == "COUNT":
+    allgames = result
+    print("Zagrałeś", allgames, "gier")
 
-    if(streak > 2):
-        print("Zaczął się lossstreak, trzymaj gardę wysoko")
-    else:
-        print("Nie ma losestreaka, pozdro")
-    
-if choose == "COUNT": #if sprawdzajacy czy wybor to COUNT
-    total_games = result
-    print("Zagrałeś", total_games, "gier")
-
-if choose == "CHAMPIONS": #if sprawdzajacy czy wybor to CHAMPIONS
-    champion = result
-    print("Grasz postaciami:", result)
-
-if choose == "TOTALDMG": #if spradzjacy czy wybor to TOTALDMG
-    full_dmg = result
-    print("Łacznie zadałeś:", full_dmg)
-
-if choose == "AVERAGEDMG": #if spradzjacy czy wybor to AVERAGEDMG
-    average_damage = result
-    print("Średnia Twoich obrażeń to:", int(result))
-
-if choose == "MOSTPLAYED": #if spradzjacy czy wybor to MOSTPLAYED
-    added_played = result
-    print("Najwięcej zagrałes:", result)
+if choose == "TOTALDMG":
+    totaldmg = result
+    print("Twój łączny damage to", totaldmg)
