@@ -1,7 +1,9 @@
 import json
 
 with open("data.json", "r") as file:
-    matches = json.load(file)
+    data = json.load(file)
+    matches = data["matches"]
+    ranking = data["player_ranking"]
 
 def lose_streak(streak): #funkcja obliczajaca loss streak
     count_losses = 0
@@ -60,6 +62,15 @@ def most_played(played): #funkcja wyswietaljaca postac ktora zagrano najwiecej
     else:
         return max(counts, key = counts.get)
 
+def player_ranking(ranking): #funkcja wyswietalaca 5 najlepszych osob z rankingu
+    for player in ranking[0:5]:
+        name = player["nickname"]
+        wr = player["winratio"]
+        place = player["place"]
+        print("Nr.", place, name , "ma", wr, "% winratio")
+
+
+
 action =  { #mozliwe akcje
     "KDA": stats,
     "STREAK": lose_streak,
@@ -67,14 +78,28 @@ action =  { #mozliwe akcje
     "CHAMPIONS": get_champs,
     "TOTALDMG": total_dmg,
     "AVERAGEDMG": average_dmg,
-    "MOSTPLAYED": most_played
+    "MOSTPLAYED": most_played,
+    "RANKING": player_ranking
 } 
+data_map = { #mapa przypisywania akcji
+    "KDA": matches,
+    "STREAK": matches,
+    "COUNT": matches,
+    "CHAMPIONS": matches,
+    "TOTALDMG": matches,
+    "AVERAGEDMG": matches,
+    "MOSTPLAYED": matches,
+    "RANKING": ranking
+}
+
+
 while True: #petla wyboru opcji
-    choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS/TOTALDMG/AVERAGEDMG/MOSTPLAYED)")
+    choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS/TOTALDMG/AVERAGEDMG/MOSTPLAYED/RANKING)")
     choose = choose.upper()
     if choose in action: #if sprawdzjacy wybor
         actionchoose = action[choose]
-        result = actionchoose(matches)
+        payload = data_map[choose]
+        result = actionchoose(payload)
         break
     else:
         print("Nie ma takiej opcji")
