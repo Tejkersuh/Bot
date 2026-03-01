@@ -25,10 +25,15 @@ def stats(kda): #funkcja obliczajaca kda
         k += game["stats"]["kills"]
         d += game["stats"]["deaths"]
         a += game["stats"]["assists"]
+    ratio = k + a
     if d == 0:
-        print("Twoje KDA to:", k+a)
+        print("Twoje KDA to:", ratio)
     else:
-        print("Twoje KDA to:", (k+a)/d)
+        print("Twoje KDA to:", ratio / d)
+    if ratio > 3:
+        print("Niezłe KDA")
+    else:
+        print("Musisz się bardziej postarać")
 
 def count(ammount): #funkcja liczaca ilosc gier
    game_ammount = len(ammount)
