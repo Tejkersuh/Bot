@@ -77,7 +77,16 @@ def player_ranking(ranking): #funkcja wyswietalaca 5 najlepszych osob z rankingu
         place = player["place"]
         print("Nr.", place, "ma", wr ,"% winratio")
 
-
+def winratio(ratio):
+    wins = 0
+    for games in ratio:
+        if games["result"] == "win".capitalize():
+            wins += 1
+        if not ratio:
+            print("Brak meczy")
+        else:
+            winratio = (wins / len(ratio)) * 100
+    print("Masz", int(winratio), "% winratio")
 
 action =  { #mozliwe akcje
     "KDA": stats,
@@ -87,7 +96,8 @@ action =  { #mozliwe akcje
     "TOTALDMG": total_dmg,
     "AVERAGEDMG": average_dmg,
     "MOSTPLAYED": most_played,
-    "RANKING": player_ranking
+    "RANKING": player_ranking,
+    "WINRATIO": winratio
 } 
 data_map = { #mapa przypisywania akcji
     "KDA": matches,
@@ -97,12 +107,13 @@ data_map = { #mapa przypisywania akcji
     "TOTALDMG": matches,
     "AVERAGEDMG": matches,
     "MOSTPLAYED": matches,
-    "RANKING": ranking
+    "RANKING": ranking,
+    "WINRATIO": matches
 }
 
 
 while True: #petla wyboru opcji
-    choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS/TOTALDMG/AVERAGEDMG/MOSTPLAYED/RANKING)")
+    choose = input("Podaj co chcesz zrobić (KDA/STREAK/COUNT/CHAMPIONS/TOTALDMG/AVERAGEDMG/MOSTPLAYED/RANKING/WINRATIO)")
     choose = choose.upper()
     if choose in action: #if sprawdzjacy wybor
         actionchoose = action[choose]
