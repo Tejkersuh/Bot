@@ -75,8 +75,9 @@ def player_ranking(ranking): #funkcja wyswietalaca 5 najlepszych osob z rankingu
         name = player["nickname"]
         wr = player["winratio"]
         place = player["place"]
-        print("Nr.", place, "ma", wr ,"% winratio")
-
+        if wr > 49:  
+            print("Nr.", place, "ma", wr ,"% winratio")
+       
 def winratio(ratio):
     wins = 0
     for games in ratio:
